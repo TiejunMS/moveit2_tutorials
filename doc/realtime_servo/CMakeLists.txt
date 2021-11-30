@@ -18,6 +18,6 @@ install(DIRECTORY launch
   DESTINATION share/${PROJECT_NAME}
 )
 
-install(DIRECTORY config
+install(DIRECTORY config urdf meshes
   DESTINATION share/${PROJECT_NAME}
 )

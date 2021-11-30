@@ -33,21 +33,17 @@ def load_yaml(package_name, file_path):
 
 def generate_launch_description():
     # Get parameters for the Servo node
-    servo_yaml = load_yaml("moveit_servo", "config/panda_simulated_config.yaml")
+    servo_yaml = load_yaml("moveit2_tutorials", "config/dofbot_config.yaml")
     servo_params = {"moveit_servo": servo_yaml}
 
     # Get URDF and SRDF
-    robot_description_config = xacro.process_file(
-        os.path.join(
-            get_package_share_directory("moveit_resources_panda_moveit_config"),
-            "config",
-            "panda.urdf.xacro",
-        )
+    robot_description_config = load_file(
+        "moveit2_tutorials", "urdf/dofbot.urdf"
     )
-    robot_description = {"robot_description": robot_description_config.toxml()}
+    robot_description = {"robot_description": robot_description_config}
 
     robot_description_semantic_config = load_file(
-        "moveit_resources_panda_moveit_config", "config/panda.srdf"
+        "moveit2_tutorials", "config/dofbot.srdf"
     )
     robot_description_semantic = {
         "robot_description_semantic": robot_description_semantic_config
@@ -69,9 +65,9 @@ def generate_launch_description():
 
     # ros2_control using FakeSystem as hardware
     ros2_controllers_path = os.path.join(
-        get_package_share_directory("moveit_resources_panda_moveit_config"),
+        get_package_share_directory("moveit2_tutorials"),
         "config",
-        "panda_ros_controllers.yaml",
+        "ros_controllers.yaml",
     )
     ros2_control_node = Node(
         package="controller_manager",
@@ -85,7 +81,7 @@ def generate_launch_description():
 
     # Load controllers
     load_controllers = []
-    for controller in ["panda_arm_controller", "joint_state_broadcaster"]:
+    for controller in ["dofbot_arm_controller", "joint_state_broadcaster"]:
         load_controllers += [
             ExecuteProcess(
                 cmd=["ros2 run controller_manager spawner.py {}".format(controller)],
@@ -111,7 +107,7 @@ def generate_launch_description():
                 package="tf2_ros",
                 plugin="tf2_ros::StaticTransformBroadcasterNode",
                 name="static_tf2_broadcaster",
-                parameters=[{"child_frame_id": "/panda_link0", "frame_id": "/world"}],
+                parameters=[{"child_frame_id": "/base_link", "frame_id": "/world"}],
             ),
             ComposableNode(
                 package="moveit_servo",
