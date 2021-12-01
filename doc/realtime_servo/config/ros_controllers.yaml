@@ -1,6 +1,6 @@
 controller_manager:
   ros__parameters:
-    update_rate: 300  # Hz
+    update_rate: 20  # Hz
 
     dofbot_arm_controller:
       type: joint_trajectory_controller/JointTrajectoryController
