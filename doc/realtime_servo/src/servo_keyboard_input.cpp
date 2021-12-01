@@ -178,7 +178,7 @@ int KeyboardServo::keyLoop()
   puts("---------------------------");
   puts("Use arrow keys and the '.' and ';' keys to Cartesian jog");
   puts("Use 'W' to Cartesian jog in the world frame, and 'E' for the End-Effector frame");
-  puts("Use 1|2|3|4|5|6|7 keys to joint jog. 'R' to reverse the direction of jogging.");
+  puts("Use 1|2|3|4|5 keys to joint jog. 'R' to reverse the direction of jogging.");
   puts("'Q' to quit.");
 
   for (;;)
