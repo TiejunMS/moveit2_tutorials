@@ -103,17 +103,17 @@ Visualization Manager:
       Frames:
         All Enabled: false
         base_link:
-          Value: false
+          Value: true
         link1:
-          Value: false
+          Value: true
         link2:
-          Value: false
+          Value: true
         link3:
-          Value: false
+          Value: true
         link4:
-          Value: false
+          Value: true
         link5:
-          Value: false
+          Value: true
         world:
           Value: true
       Marker Scale: 1
@@ -134,7 +134,7 @@ Visualization Manager:
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
-    Fixed Frame: world
+    Fixed Frame: base_link
     Frame Rate: 30
   Name: root
   Tools:

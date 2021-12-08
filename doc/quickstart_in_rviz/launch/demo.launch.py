@@ -40,17 +40,24 @@ def generate_launch_description():
     )
 
     # planning_context
-    robot_description_config = xacro.process_file(
-        os.path.join(
-            get_package_share_directory("moveit_resources_panda_moveit_config"),
-            "config",
-            "panda.urdf.xacro",
-        )
+    # robot_description_config = xacro.process_file(
+    #     os.path.join(
+    #         get_package_share_directory("moveit_resources_panda_moveit_config"),
+    #         "config",
+    #         "panda.urdf.xacro",
+    #     )
+    # )
+    # robot_description = {"robot_description": robot_description_config.toxml()}
+    robot_description_config = load_file(
+        "moveit2_tutorials", "urdf/dofbot.urdf"
     )
-    robot_description = {"robot_description": robot_description_config.toxml()}
+    robot_description = {"robot_description": robot_description_config}
 
+    # robot_description_semantic_config = load_file(
+    #     "moveit_resources_panda_moveit_config", "config/panda.srdf"
+    # )
     robot_description_semantic_config = load_file(
-        "moveit_resources_panda_moveit_config", "config/panda.srdf"
+        "moveit2_tutorials", "config/dofbot.srdf"
     )
     robot_description_semantic = {
         "robot_description_semantic": robot_description_semantic_config
@@ -69,14 +76,20 @@ def generate_launch_description():
             "start_state_max_bounds_error": 0.1,
         }
     }
+    # ompl_planning_yaml = load_yaml(
+    #     "moveit_resources_panda_moveit_config", "config/ompl_planning.yaml"
+    # )
     ompl_planning_yaml = load_yaml(
-        "moveit_resources_panda_moveit_config", "config/ompl_planning.yaml"
+        "moveit2_tutorials", "config/ompl_planning.yaml"
     )
     ompl_planning_pipeline_config["move_group"].update(ompl_planning_yaml)
 
     # Trajectory Execution Functionality
+    # moveit_simple_controllers_yaml = load_yaml(
+    #     "moveit_resources_panda_moveit_config", "config/panda_controllers.yaml"
+    # )
     moveit_simple_controllers_yaml = load_yaml(
-        "moveit_resources_panda_moveit_config", "config/panda_controllers.yaml"
+        "moveit2_tutorials", "config/ros_controllers.yaml"
     )
     moveit_controllers = {
         "moveit_simple_controller_manager": moveit_simple_controllers_yaml,
@@ -118,6 +131,14 @@ def generate_launch_description():
     rviz_base = os.path.join(get_package_share_directory("moveit2_tutorials"), "launch")
     rviz_full_config = os.path.join(rviz_base, "panda_moveit_config_demo.rviz")
     rviz_empty_config = os.path.join(rviz_base, "panda_moveit_config_demo_empty.rviz")
+    rviz_full_config = (
+        get_package_share_directory("moveit2_tutorials")
+        + "/config/demo_rviz_config.rviz"
+    )
+    rviz_empty_config = (
+        get_package_share_directory("moveit2_tutorials")
+        + "/config/demo_rviz_config.rviz"
+    )
     rviz_node_tutorial = Node(
         package="rviz2",
         executable="rviz2",
@@ -153,7 +174,8 @@ def generate_launch_description():
         executable="static_transform_publisher",
         name="static_transform_publisher",
         output="log",
-        arguments=["0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "world", "panda_link0"],
+        # arguments=["0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "world", "panda_link0"],
+        arguments=["0.0", "0.0", "0.0", "0.0", "0.0", "world", "base_link"],
     )
 
     # Publish TF
@@ -167,9 +189,11 @@ def generate_launch_description():
 
     # ros2_control using FakeSystem as hardware
     ros2_controllers_path = os.path.join(
-        get_package_share_directory("moveit_resources_panda_moveit_config"),
+        # get_package_share_directory("moveit_resources_panda_moveit_config"),
+        get_package_share_directory("moveit2_tutorials"),
         "config",
-        "panda_ros_controllers.yaml",
+        # "panda_ros_controllers.yaml",
+        "ros_controllers.yaml",
     )
     ros2_control_node = Node(
         package="controller_manager",
@@ -184,8 +208,9 @@ def generate_launch_description():
     # Load controllers
     load_controllers = []
     for controller in [
-        "panda_arm_controller",
-        "panda_hand_controller",
+        # "panda_arm_controller",
+        # "panda_hand_controller",
+        "dofbot_arm_controller",
         "joint_state_broadcaster",
     ]:
         load_controllers += [

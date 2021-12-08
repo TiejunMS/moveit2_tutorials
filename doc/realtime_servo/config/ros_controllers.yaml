@@ -15,7 +15,6 @@ dofbot_arm_controller:
       - position
     state_interfaces:
       - position
-      - velocity
     joints:
       - joint1
       - joint2
