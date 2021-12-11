@@ -145,31 +145,26 @@
       <param name="initial_position">0.0</param>
       <command_interface name="position" />
       <state_interface name="position" />
-      <state_interface name="velocity" />
     </joint>
     <joint name="joint2">
       <param name="initial_position">0.0</param>
       <command_interface name="position" />
       <state_interface name="position" />
-      <state_interface name="velocity" />
     </joint>
     <joint name="joint3">
       <param name="initial_position">0.0</param>
       <command_interface name="position" />
       <state_interface name="position" />
-      <state_interface name="velocity" />
     </joint>
     <joint name="joint4">
       <param name="initial_position">0.0</param>
       <command_interface name="position" />
       <state_interface name="position" />
-      <state_interface name="velocity" />
     </joint>
     <joint name="joint5">
       <param name="initial_position">0.0</param>
       <command_interface name="position" />
       <state_interface name="position" />
-      <state_interface name="velocity" />
     </joint>
   </ros2_control>
 </robot>
