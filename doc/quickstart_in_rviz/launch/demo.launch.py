@@ -89,7 +89,7 @@ def generate_launch_description():
     #     "moveit_resources_panda_moveit_config", "config/panda_controllers.yaml"
     # )
     moveit_simple_controllers_yaml = load_yaml(
-        "moveit2_tutorials", "config/ros_controllers.yaml"
+        "moveit2_tutorials", "config/dofbot_controllers.yaml"
     )
     moveit_controllers = {
         "moveit_simple_controller_manager": moveit_simple_controllers_yaml,
